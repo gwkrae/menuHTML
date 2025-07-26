@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const moonIcon = document.querySelector(".moon-icon");
   const body = document.body;
 
-  // Check for saved theme preference
   const savedTheme = localStorage.getItem("theme");
   if (savedTheme) {
     body.classList.add(savedTheme);
@@ -39,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuItemsContainer = document.querySelector(".menu-items");
   const itemCards = document.querySelectorAll(".item-card");
 
-  /*----------------------- Detailed View ---------------------------*/
   const detailedViewModal = document.getElementById("detailedViewModal");
   const closeModal = document.querySelector(".close-button");
   const modalItemImage = document.getElementById("modal-item-image");
@@ -52,13 +50,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const nextItemBtn = document.getElementById("nextItemBtn");
 
   let currentItemIndex = 0;
-  const items = Array.from(itemCards); // Convert NodeList to Array for easier indexing
+  const items = Array.from(itemCards);
 
   function showItemInModal(index) {
     if (index < 0) {
-      currentItemIndex = items.length - 1; // Loop to last item
+      currentItemIndex = items.length - 1;
     } else if (index >= items.length) {
-      currentItemIndex = 0; // Loop to first item
+      currentItemIndex = 0;
     } else {
       currentItemIndex = index;
     }
@@ -79,23 +77,20 @@ document.addEventListener("DOMContentLoaded", () => {
     detailedViewModal.style.display = "block";
   }
 
-  // Event Listeners for Quick/Detailed View Toggles
   quickViewToggle.addEventListener("click", () => {
     quickViewToggle.classList.add("active");
     detailedViewToggle.classList.remove("active");
     menuItemsContainer.classList.add("quick-view");
-    detailedViewModal.style.display = "none"; // Hide modal if open
+    detailedViewModal.style.display = "none";
   });
 
   detailedViewToggle.addEventListener("click", () => {
     detailedViewToggle.classList.add("active");
     quickViewToggle.classList.remove("active");
-    menuItemsContainer.classList.remove("quick-view"); // Ensure grid is normal
-    // Open the first item in detailed view when toggled
+    menuItemsContainer.classList.remove("quick-view");
     showItemInModal(0);
   });
 
-  // Event Listener for opening detailed view from item card (when quick view is active)
   itemCards.forEach((card, index) => {
     card.addEventListener("click", () => {
       if (quickViewToggle.classList.contains("active")) {
@@ -104,19 +99,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Modal Close Button
   closeModal.addEventListener("click", () => {
     detailedViewModal.style.display = "none";
   });
 
-  // Close modal when clicking outside of it
   window.addEventListener("click", (event) => {
     if (event.target === detailedViewModal) {
       detailedViewModal.style.display = "none";
     }
   });
 
-  // Navigation buttons in modal
   prevItemBtn.addEventListener("click", () => {
     showItemInModal(currentItemIndex - 1);
   });
